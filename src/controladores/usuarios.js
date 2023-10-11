@@ -1,14 +1,15 @@
 const knex = require('../conexao')
 const bcrypt = require('bcrypt')
+const usuarioSchema = require('../validacoes/usuario')
 
 const cadastrarUsuario = async (req, res) => {
     const { nome, email, senha } = req.body
 
     try {
 
-        const UsuarioBusca = await knex('usuarios').where({ email }).first()
+        const usuarioBusca = await knex('usuarios').where({ email }).first()
 
-        if (UsuarioBusca) {
+        if (usuarioBusca) {
             return res.status(400).json({ mensagem: 'o email informado já existe' })
         }
 
@@ -27,7 +28,7 @@ const cadastrarUsuario = async (req, res) => {
 
 
     } catch (error) {
-        return res.status(400).json({ mensagem: error.message })
+        return res.status(500).json({ mensagem: error.message })
     }
 }
 
@@ -35,4 +36,37 @@ const perfilUsuario = (req, res) => {
     return res.json(req.usuario)
 }
 
-module.exports = { cadastrarUsuario, perfilUsuario }
+const editarUsuario = async (req,res) => {
+
+        const { nome, email, senha } = req.body;
+
+        const { id } = req.usuario;
+
+        try {
+            const usuarioBusca = await knex('usuarios').where({ id }).first()
+            if (usuarioBusca.email != email){
+
+                const usuarioBuscaPorEmail = await knex('usuarios').where({email}).first()
+                if (usuarioBuscaPorEmail){
+                    return res.status(400).json({ mensagem: 'o email informado já está cadastrado.'})
+                }
+            }
+            
+            const senhaCriptografada = await bcrypt.hash(senha, 10)  
+
+            const usuarioEditado = await knex('usuarios').update({
+                nome,
+                email,
+                senha: senhaCriptografada
+            }).where({id});
+
+            return res.status(200).json({mensagem: 'Usuário atualizado com sucesso.'});
+                 
+            
+
+        } catch (error) {    
+            
+            return res.status(500).json({ mensagem: error.message})
+        }
+}
+module.exports = { cadastrarUsuario, perfilUsuario, editarUsuario }

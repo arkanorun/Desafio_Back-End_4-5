@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { cadastrarUsuario, perfilUsuario } = require('./controladores/usuarios')
+const { cadastrarUsuario, perfilUsuario, editarUsuario } = require('./controladores/usuarios')
 const rotas = Router()
 const validarCorpo = require('./intermediarios/validarCorpoRequisicao.js')
 const usuarioSchema = require('./validacoes/usuario')
@@ -20,5 +20,5 @@ rotas.use(filtroLogin)
 
 rotas.get('/usuario', perfilUsuario)
 
-
+rotas.put('/usuario', validarCorpo(usuarioSchema), editarUsuario)
 module.exports = rotas
