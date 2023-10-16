@@ -72,4 +72,5 @@ const editarUsuario = async (req,res) => {
             return res.status(500).json({ mensagem: error.message})
         }
 }
+
 module.exports = { cadastrarUsuario, perfilUsuario, editarUsuario }
