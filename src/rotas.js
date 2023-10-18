@@ -2,10 +2,10 @@ const { Router } = require('express')
 const { cadastrarUsuario, perfilUsuario, editarUsuario } = require('./controladores/usuarios')
 const rotas = Router()
 const validarCorpo = require('./intermediarios/validarCorpoRequisicao.js')
-const usuarioSchema = require('./validacoes/usuario')
+const { loginSchema, usuarioSchema } = require('./validacoes/schema')
 const { listarCategorias } = require('./controladores/categorias')
 const login = require('./controladores/autenticacao')
-const loginSchema = require('./validacoes/login')
+
 const filtroLogin = require('./intermediarios/filtrarLogin')
 
 
