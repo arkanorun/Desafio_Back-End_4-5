@@ -7,7 +7,7 @@ const { listarCategorias } = require('./controladores/categorias')
 const login = require('./controladores/autenticacao')
 const loginSchema = require('./validacoes/login')
 const filtroLogin = require('./intermediarios/filtrarLogin')
-
+const { listarProduto } = require('./controladores/produtos')
 
 
 rotas.post('/usuario', validarCorpo(usuarioSchema), cadastrarUsuario)
@@ -22,5 +22,6 @@ rotas.get('/usuario', perfilUsuario)
 
 rotas.put('/usuario', validarCorpo(usuarioSchema), editarUsuario)
 
+rotas.get('/produto', listarProduto);
 
 module.exports = rotas
