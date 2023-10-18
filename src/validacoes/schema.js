@@ -76,18 +76,15 @@ const clienteSchema = joi.object({
         'number.positive': 'o campo cpf precisa ser um número positivo',
         'number.precision': 'o campo cpf deve possuir 11 números'
     }),
-    cep: joi.string().required().messages({
-        'any.required': 'o campo cep é obrigatório',
+    cep: joi.string().messages({
         'string.empty': 'o campo cep não pode estar vazio',
         'string.base': 'o campo cep precisa ser do tipo string'
     }),
-    numero: joi.string().required().messages({
-        'any.required': 'o campo numero é obrigatório',
+    numero: joi.string().messages({
         'string.empty': 'o campo numero não pode estar vazio',
         'string.base': 'o campo numero precisa ser do tipo string'
     }),
-    bairro: joi.string().required().messages({
-        'any.required': 'o campo bairro é obrigatório',
+    bairro: joi.string().messages({
         'string.empty': 'o campo bairro não pode estar vazio',
         'string.base': 'o campo bairro precisa ser do tipo string'
     })
