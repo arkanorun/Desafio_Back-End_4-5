@@ -16,7 +16,7 @@ const editarProduto = async (req,res) => {
             if (!produtoBusca){
 
                 
-                    return res.status(400).json({ mensagem: 'ID de produto inexistente.'})
+                    return res.status(404).json({ mensagem: 'ID de produto inexistente.'})
                 }
             
 	    
@@ -26,7 +26,7 @@ const editarProduto = async (req,res) => {
             const categoriaBusca = await knex('categorias').where('id','=', categoria_id).first()
 	    if(!categoriaBusca){
 	    
-		return res.status(400).json({mensagem: 'A categoria de produto informada não foi encontrada.'})
+		return res.status(404).json({mensagem: 'A categoria de produto informada não foi encontrada.'})
 	
 	    }		
 	
@@ -56,7 +56,7 @@ const excluirProdutoPorId = async (req,res) => {
             if (!produtoBusca){
 
                 
-                    return res.status(400).json({ mensagem: 'ID de produto inexistente.'})
+                    return res.status(404).json({ mensagem: 'ID de produto inexistente.'})
                 }
 
 	await knex('produtos').where({id}).del();

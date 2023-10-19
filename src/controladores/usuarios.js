@@ -1,6 +1,5 @@
 const knex = require('../conexao')
 const bcrypt = require('bcrypt')
-//const usuarioSchema = require('../validacoes/usuario')
 
 
 const cadastrarUsuario = async (req, res) => {
@@ -20,7 +19,7 @@ const cadastrarUsuario = async (req, res) => {
         const usuarioCadastrado = await knex('usuarios').insert({
             nome,
             email,
-            senha: senhaCriptografada
+            senha: senhaCriptografada   
         }).returning('*')
 
         const { senha: _, ...novoUsuario } = usuarioCadastrado[0]
