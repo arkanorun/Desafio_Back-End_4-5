@@ -47,12 +47,12 @@ const produtoSchema = joi.object({
     }),
     valor: joi.number().positive().required().messages({
         'any.required': 'o campo valor é obrigatório',
-        'number.base': 'o campo quantidade_estoque precisa ser formado apenas por numeros',
+        'number.base': 'o campo valor precisa ser formado apenas por numeros',
         'number.positive': 'o campo valor precisa ser um número positivo'
     }),
     categoria_id: joi.number().integer().required().messages({
         'any.required': 'o campo categoria_id é obrigatório',
-        'number.base': 'o campo quantidade_estoque precisa ser formado apenas por numeros',
+        'number.base': 'o campo categoria_id precisa ser formado apenas por numeros',
         'number.integer': 'o campo categoria_id precisa ser um número inteiro'
     })
 })
