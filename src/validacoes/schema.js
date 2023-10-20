@@ -80,6 +80,10 @@ const clienteSchema = joi.object({
         'string.empty': 'o campo cep não pode estar vazio',
         'string.base': 'o campo cep precisa ser do tipo string'
     }),
+    rua: joi.string().messages({
+        'string.empty': 'o campo rua não pode estar vazio',
+        'string.base': 'o campo rua precisa ser do tipo string'
+    }),
     numero: joi.string().messages({
         'string.empty': 'o campo numero não pode estar vazio',
         'string.base': 'o campo numero precisa ser do tipo string'
@@ -87,6 +91,14 @@ const clienteSchema = joi.object({
     bairro: joi.string().messages({
         'string.empty': 'o campo bairro não pode estar vazio',
         'string.base': 'o campo bairro precisa ser do tipo string'
+    }),
+    cidade: joi.string().messages({
+        'string.empty': 'o campo cidade não pode estar vazio',
+        'string.base': 'o campo cidade precisa ser do tipo string'
+    }),
+    estado: joi.string().messages({
+        'string.empty': 'o campo estado não pode estar vazio',
+        'string.base': 'o campo estado precisa ser do tipo string'
     })
 
 })
