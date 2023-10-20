@@ -99,16 +99,7 @@ const clienteSchema = joi.object({
     estado: joi.string().trim().messages({
         'string.empty': 'o campo estado não pode estar vazio',
         'string.base': 'o campo estado precisa ser do tipo string'
-    }),
-    cidade: joi.string().messages({
-        'string.empty': 'o campo cidade não pode estar vazio',
-        'string.base': 'o campo cidade precisa ser do tipo string'
-    }),
-    estado: joi.string().messages({
-        'string.empty': 'o campo estado não pode estar vazio',
-        'string.base': 'o campo estado precisa ser do tipo string'
     })
-
 })
 
 module.exports = { usuarioSchema, loginSchema, produtoSchema, clienteSchema }
