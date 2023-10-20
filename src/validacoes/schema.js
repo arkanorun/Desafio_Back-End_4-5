@@ -100,7 +100,6 @@ const clienteSchema = joi.object({
         'string.empty': 'o campo estado não pode estar vazio',
         'string.base': 'o campo estado precisa ser do tipo string'
     })
-
 })
 
 module.exports = { usuarioSchema, loginSchema, produtoSchema, clienteSchema }
