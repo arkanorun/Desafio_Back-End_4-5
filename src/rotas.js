@@ -23,7 +23,7 @@ rotas.get('/usuario', perfilUsuario)
 
 rotas.put('/usuario', validarCorpo(usuarioSchema), editarUsuario)
 
-rotas.put('/produto/:id',validarCorpo(produtoSchema), editarProduto)
+rotas.put('/produto/:id', validarCorpo(produtoSchema), editarProduto)
 rotas.delete('/produto/:id', excluirProdutoPorId)
 
 module.exports = rotas
