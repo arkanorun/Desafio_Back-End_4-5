@@ -25,7 +25,10 @@ rotas.get('/usuario', perfilUsuario)
 rotas.put('/usuario', validarCorpo(usuarioSchema), editarUsuario)
 
 rotas.put('/produto/:id', validarCorpo(produtoSchema), editarProduto)
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
 rotas.delete('/produto/:id', excluirProdutoPorId)
 
 rotas.put('/cliente/:id', validarCorpo(clienteSchema), editarCliente)
