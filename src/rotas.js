@@ -6,7 +6,6 @@ const { loginSchema, usuarioSchema, produtoSchema, clienteSchema } = require('./
 const { listarCategorias } = require('./controladores/categorias')
 const { editarCliente, detalharCliente } = require('./controladores/clientes')
 const login = require('./controladores/autenticacao')
-
 const filtroLogin = require('./intermediarios/filtrarLogin')
 const { editarProduto, excluirProdutoPorId } = require('./controladores/produtos')
 
@@ -25,10 +24,7 @@ rotas.get('/usuario', perfilUsuario)
 rotas.put('/usuario', validarCorpo(usuarioSchema), editarUsuario)
 
 rotas.put('/produto/:id', validarCorpo(produtoSchema), editarProduto)
-<<<<<<< HEAD
 
-=======
->>>>>>> main
 rotas.delete('/produto/:id', excluirProdutoPorId)
 
 rotas.put('/cliente/:id', validarCorpo(clienteSchema), editarCliente)
