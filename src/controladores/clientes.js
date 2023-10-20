@@ -1,24 +1,32 @@
 const knex = require('../conexao')
 
-const cadastrarCliente = async (req, res) => {
+const editarCliente = async (req, res) => {
+    const { id } = req.params;
 
     const { nome, email, cpf, cep, rua, numero, bairro, cidade, estado } = req.body;
 
     try {
 
-        const emailCadastrado = await knex('clientes').where({ email }).first()
+        const idCorrespondente = await knex('clientes').where({ id }).first()
+
+        if (!idCorrespondente) {
+            return res.status(404).json({ mensagem: "O ID informado não foi encontrado em nenhum registro" })
+        }
+
+        const emailCadastrado = await knex('clientes').where({ email }).where('id', '!=', id).first()
 
         if (emailCadastrado) {
-            return res.status(400).json({ mensagem: 'o email informado já existe' })
+            return res.status(400).json({ mensagem: 'O email informado já está cadastrado' })
         }
 
-        const cpfCadastrado = await knex('clientes').where({ cpf }).first()
+        const cpfCadastrado = await knex('clientes').where({ cpf }).where('id', '!=', id).first()
 
         if (cpfCadastrado) {
-            return res.status(400).json({ mensagem: 'o cpf informado já existe' })
+            return res.status(400).json({ mensagem: 'O CPF informado já está cadastrado' })
         }
 
-        const novoCliente = await knex('clientes').insert({
+
+        const clienteAtualizado = await knex('clientes').where({ id }).update({
             nome,
             email,
             cpf,
@@ -30,15 +38,37 @@ const cadastrarCliente = async (req, res) => {
             estado
         }).returning('*')
 
-        return res.status(201).json(novoCliente[0])
+        return res.status(200).json(clienteAtualizado[0])
 
     } catch (error) {
-        return res.status(500).json({ mensagem: error.message })
-    }
 
+        return res.status(500).json({ mensagem: error.message })
+
+    }
+}
+
+const detalharCliente = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+
+        const idCorrespondente = await knex('clientes').where({ id }).first()
+
+        if (!idCorrespondente) {
+            return res.status(404).json({ mensagem: "O ID informado não foi encontrado em nenhum registro" })
+        }
+
+        return res.status(200).json(idCorrespondente)
+
+    } catch (error) {
+
+        return res.status(500).json({ mensagem: error.message })
+
+    }
 }
 
 module.exports = {
-    cadastrarCliente
+    editarCliente,
+    detalharCliente
 }
 
