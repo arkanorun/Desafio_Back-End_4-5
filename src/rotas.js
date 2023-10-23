@@ -7,7 +7,7 @@ const { listarCategorias } = require('./controladores/categorias')
 const { cadastrarCliente, listarCliente, editarCliente, detalharCliente } = require('./controladores/clientes')
 const login = require('./controladores/autenticacao')
 const filtroLogin = require('./intermediarios/filtrarLogin')
-const { editarProduto, excluirProdutoPorId } = require('./controladores/produtos')
+const { cadastrarProduto, detalharProdutoId, editarProduto, excluirProdutoPorId } = require('./controladores/produtos')
 
 
 
@@ -34,5 +34,11 @@ rotas.put('/cliente/:id', validarCorpo(clienteSchema), editarCliente)
 rotas.get('/cliente', listarCliente)
 
 rotas.get('/cliente/:id', detalharCliente)
+
+rotas.post('/produto', validarCorpo(produtoSchema), cadastrarProduto)
+
+rotas.get('/produtos/:id', detalharProdutoId)
+
+
 
 module.exports = rotas
