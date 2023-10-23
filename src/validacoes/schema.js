@@ -74,7 +74,7 @@ const clienteSchema = joi.object({
         'string.length': 'o campo cpf deve possuir 11 números',
         'string.pattern.name': 'o campo cpf deve ser uma string de valores numéricos'
     }),
-    cep: joi.string().min(8).max(11).messages({
+    cep: joi.string().min(8).max(11).trim().messages({
         'string.empty': 'o campo cep não pode estar vazio',
         'string.base': 'o campo cep precisa ser do tipo string',
         'string.max': 'o campo cep deve não pode conter menos que 8 ou mais que 11 valores',
