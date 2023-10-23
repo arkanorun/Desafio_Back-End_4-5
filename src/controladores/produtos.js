@@ -61,7 +61,6 @@ const editarProduto = async (req, res) => {
 
         }
 
-
         const produtoEditado = await knex('produtos').where({ id }).update({
             descricao,
             quantidade_estoque,
@@ -70,8 +69,6 @@ const editarProduto = async (req, res) => {
         });
 
         return res.status(200).json({ mensagem: 'Produto atualizado com sucesso.' });
-
-
 
     } catch (error) {
         return res.status(500).json({ mensagem: error.message })
@@ -94,14 +91,10 @@ const excluirProdutoPorId = async (req, res) => {
 
         return res.status(200).json({ mensagem: 'Produto excluído com sucesso.' })
 
-
     } catch (error) {
 
         return res.status(500).json({ mensagem: error.message })
     }
-
-
-
 
 }
 
