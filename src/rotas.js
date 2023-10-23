@@ -4,7 +4,7 @@ const rotas = Router()
 const validarCorpo = require('./intermediarios/validarCorpoRequisicao.js')
 const { loginSchema, usuarioSchema, produtoSchema, clienteSchema } = require('./validacoes/schema')
 const { listarCategorias } = require('./controladores/categorias')
-const { cadastrarCliente, editarCliente, detalharCliente } = require('./controladores/clientes')
+const { cadastrarCliente, listarCliente, editarCliente, detalharCliente } = require('./controladores/clientes')
 const login = require('./controladores/autenticacao')
 const filtroLogin = require('./intermediarios/filtrarLogin')
 const { editarProduto, excluirProdutoPorId } = require('./controladores/produtos')
@@ -30,6 +30,8 @@ rotas.delete('/produto/:id', excluirProdutoPorId)
 rotas.post('/cliente', validarCorpo(clienteSchema), cadastrarCliente)
 
 rotas.put('/cliente/:id', validarCorpo(clienteSchema), editarCliente)
+
+rotas.get('/cliente', listarCliente)
 
 rotas.get('/cliente/:id', detalharCliente)
 
