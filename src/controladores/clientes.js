@@ -34,6 +34,17 @@ const cadastrarCliente = async (req, res) => {
     }
 }
 
+const listarCliente = async (req, res) => {
+    try {
+        const listaDeClientes = await knex('clientes');
+
+        return res.status(201).json(listaDeClientes);
+
+    } catch {
+        res.status(500).json({ mensagem: error.message })
+    }
+}
+
 const editarCliente = async (req, res) => {
     const { id } = req.params;
 
@@ -104,6 +115,7 @@ const detalharCliente = async (req, res) => {
 module.exports = {
     editarCliente,
     detalharCliente,
-    cadastrarCliente
+    cadastrarCliente,
+    listarCliente
 }
 
