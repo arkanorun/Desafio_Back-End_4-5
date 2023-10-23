@@ -23,10 +23,6 @@ rotas.get('/usuario', perfilUsuario)
 
 rotas.put('/usuario', validarCorpo(usuarioSchema), editarUsuario)
 
-rotas.put('/produto/:id', validarCorpo(produtoSchema), editarProduto)
-
-rotas.delete('/produto/:id', excluirProdutoPorId)
-
 rotas.post('/cliente', validarCorpo(clienteSchema), cadastrarCliente)
 
 rotas.put('/cliente/:id', validarCorpo(clienteSchema), editarCliente)
@@ -37,7 +33,11 @@ rotas.get('/cliente/:id', detalharCliente)
 
 rotas.post('/produto', validarCorpo(produtoSchema), cadastrarProduto)
 
+rotas.put('/produto/:id', validarCorpo(produtoSchema), editarProduto)
+
 rotas.get('/produtos/:id', detalharProdutoId)
+
+rotas.delete('/produto/:id', excluirProdutoPorId)
 
 
 
