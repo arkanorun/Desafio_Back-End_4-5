@@ -41,6 +41,7 @@ const detalharProdutoId = async (req, res) => {
     }
 };
 
+
 const editarProduto = async (req, res) => {
 
 
