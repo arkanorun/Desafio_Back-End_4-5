@@ -36,7 +36,7 @@ rotas.put('/produto/:id', validarCorpo(produtoSchema), editarProduto)
 
 rotas.get('/produto', listarProduto);
 
-rotas.get('/produtos/:id', detalharProdutoId)
+rotas.get('/produto/:id', detalharProdutoId)
 
 rotas.delete('/produto/:id', excluirProdutoPorId)
 
