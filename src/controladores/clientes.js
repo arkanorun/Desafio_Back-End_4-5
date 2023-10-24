@@ -36,11 +36,11 @@ const cadastrarCliente = async (req, res) => {
 
 const listarCliente = async (req, res) => {
     try {
-        const listaDeClientes = await knex('clientes');
+        const listaDeClientes = await knex('clientes').orderBy('id')
 
         return res.status(201).json(listaDeClientes);
 
-    } catch {
+    } catch (error) {
         res.status(500).json({ mensagem: error.message })
     }
 }

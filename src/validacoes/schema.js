@@ -49,7 +49,7 @@ const produtoSchema = joi.object({
         'any.required': 'o campo valor é obrigatório',
         'number.base': 'o campo valor precisa ser formado apenas por numeros',
         'number.positive': 'o campo valor precisa ser um número positivo',
-        'number.integer': 'o campo categoria_id precisa ser um número inteiro'
+        'number.integer': 'o campo valor precisa ser um número inteiro'
     }),
     categoria_id: joi.number().integer().required().messages({
         'any.required': 'o campo categoria_id é obrigatório',
@@ -69,7 +69,7 @@ const clienteSchema = joi.object({
         'string.email': 'o campo email deve ser um email com formato válido',
         'string.empty': 'o campo email não pode estar vazio'
     }),
-    cpf: joi.string().length(11).pattern(/^[0-9]+$/, 'numbers').messages({
+    cpf: joi.string().required().length(11).pattern(/^[0-9]+$/, 'numbers').messages({
         'any.required': 'o campo cpf é obrigatório',
         'string.base': 'o campo cpf precisa ser do tipo string',
         'string.length': 'o campo cpf deve possuir 11 números',

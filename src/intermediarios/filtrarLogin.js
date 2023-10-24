@@ -25,10 +25,12 @@ const filtroLogin = async (req, res, next) => {
 
         req.usuario = usuario;
 
+        next()
+
     } catch (error) {
         return res.status(400).json({ mensagem: error.message });
     }
-    next();
+
 };
 
 module.exports = filtroLogin

@@ -60,7 +60,7 @@ const listarProduto = async (req, res) => {
                 return res.status(404).json({ mensagem: 'Categoria não cadastrada.' });
             }
         } else {
-            const produtos = await knex('produtos').select('*');
+            const produtos = await knex('produtos').orderBy('id');
             return res.status(200).json(produtos);
         }
     } catch (error) {
@@ -108,8 +108,8 @@ const excluirProdutoPorId = async (req, res) => {
 
     try {
         const produtoBusca = await knex('produtos').where({ id }).first()
-        if (!produtoBusca) {
 
+        if (!produtoBusca) {
 
             return res.status(404).json({ mensagem: 'ID de produto inexistente.' })
         }
@@ -124,7 +124,6 @@ const excluirProdutoPorId = async (req, res) => {
     }
 
 }
-
 
 
 
