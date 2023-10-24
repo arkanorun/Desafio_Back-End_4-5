@@ -6,7 +6,7 @@ const usuarioSchema = joi.object({
         'string.empty': 'o campo nome não pode estar vazio',
         'string.base': 'o campo nome precisa ser do tipo string'
     }),
-    email: joi.string().trim().email().required().messages({
+    email: joi.string().email().required().messages({
         'any.required': 'o campo email é obrigatório',
         'string.email': 'o campo email deve ser um email com formato válido',
         'string.empty': 'o campo email não pode estar vazio',
