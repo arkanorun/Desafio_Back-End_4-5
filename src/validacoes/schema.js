@@ -20,13 +20,13 @@ const usuarioSchema = joi.object({
 })
 
 const loginSchema = joi.object({
-    email: joi.string().email().trim().required().messages({
+    email: joi.string().email().required().messages({
         'any.required': 'o campo email é obrigatório',
         'string.email': 'o campo email deve ser um email com formato válido',
         'string.empty': 'o campo email não pode estar vazio',
         'string.base': 'o campo email precisa ser do tipo string'
     }),
-    senha: joi.string().trim().required().messages({
+    senha: joi.string().required().messages({
         'any.required': 'o campo senha é obrigatório',
         'string.empty': 'o campo senha não pode estar vazio',
         'string.base': 'o campo senha precisa ser do tipo string'
@@ -49,7 +49,7 @@ const produtoSchema = joi.object({
         'any.required': 'o campo valor é obrigatório',
         'number.base': 'o campo valor precisa ser formado apenas por numeros',
         'number.positive': 'o campo valor precisa ser um número positivo',
-        'number.integer': 'o campo categoria_id precisa ser um número inteiro'
+        'number.integer': 'o campo valor precisa ser um número inteiro'
     }),
     categoria_id: joi.number().integer().required().messages({
         'any.required': 'o campo categoria_id é obrigatório',
