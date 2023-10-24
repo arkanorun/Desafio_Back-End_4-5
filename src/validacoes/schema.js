@@ -6,7 +6,7 @@ const usuarioSchema = joi.object({
         'string.empty': 'o campo nome não pode estar vazio',
         'string.base': 'o campo nome precisa ser do tipo string'
     }),
-    email: joi.string().email().required().messages({
+    email: joi.string().trim().email().required().messages({
         'any.required': 'o campo email é obrigatório',
         'string.email': 'o campo email deve ser um email com formato válido',
         'string.empty': 'o campo email não pode estar vazio',
@@ -20,13 +20,13 @@ const usuarioSchema = joi.object({
 })
 
 const loginSchema = joi.object({
-    email: joi.string().email().required().messages({
+    email: joi.string().email().trim().required().messages({
         'any.required': 'o campo email é obrigatório',
         'string.email': 'o campo email deve ser um email com formato válido',
         'string.empty': 'o campo email não pode estar vazio',
         'string.base': 'o campo email precisa ser do tipo string'
     }),
-    senha: joi.string().required().messages({
+    senha: joi.string().trim().required().messages({
         'any.required': 'o campo senha é obrigatório',
         'string.empty': 'o campo senha não pode estar vazio',
         'string.base': 'o campo senha precisa ser do tipo string'
@@ -64,12 +64,12 @@ const clienteSchema = joi.object({
         'string.empty': 'o campo nome não pode estar vazio',
         'string.base': 'o campo nome precisa ser do tipo string',
     }),
-    email: joi.string().email().required().messages({
+    email: joi.string().email().trim().required().messages({
         'any.required': 'o campo email é obrigatório',
         'string.email': 'o campo email deve ser um email com formato válido',
         'string.empty': 'o campo email não pode estar vazio'
     }),
-    cpf: joi.string().length(11).pattern(/^[0-9]+$/, 'numbers').messages({
+    cpf: joi.string().required().length(11).pattern(/^[0-9]+$/, 'numbers').messages({
         'any.required': 'o campo cpf é obrigatório',
         'string.base': 'o campo cpf precisa ser do tipo string',
         'string.length': 'o campo cpf deve possuir 11 números',
