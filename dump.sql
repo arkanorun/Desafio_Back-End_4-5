@@ -52,3 +52,20 @@ bairro text,
 cidade text,
 estado text
 );
+
+create table pedidos (
+  id serial primary key, 
+  cliente_id integer references clientes(id),
+  observacao text,
+  valor_total integer not null 
+)
+
+create table pedido_produtos (
+  id serial primary key,
+  pedido_id integer references pedidos(id),
+  produto_id integer references produtos(id),
+  quantidade_produto integer not null,
+  valor_produto integer not null
+)
+
+alter table produtos add column produtos_imagem text
