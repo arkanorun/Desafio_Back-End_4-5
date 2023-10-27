@@ -45,10 +45,11 @@ const produtoSchema = joi.object({
         'number.integer': 'o campo quantidade_estoque precisa ser um número inteiro',
         'number.positive': 'o campo quantidade_estoque precisa ser um número positivo'
     }),
-    valor: joi.number().positive().required().messages({
+    valor: joi.number().positive().integer().required().messages({
         'any.required': 'o campo valor é obrigatório',
         'number.base': 'o campo valor precisa ser formado apenas por numeros',
-        'number.positive': 'o campo valor precisa ser um número positivo'
+        'number.positive': 'o campo valor precisa ser um número positivo',
+        'number.integer': 'o campo valor precisa ser um número inteiro'
     }),
     categoria_id: joi.number().integer().required().messages({
         'any.required': 'o campo categoria_id é obrigatório',
@@ -68,13 +69,13 @@ const clienteSchema = joi.object({
         'string.email': 'o campo email deve ser um email com formato válido',
         'string.empty': 'o campo email não pode estar vazio'
     }),
-    cpf: joi.string().length(11).pattern(/^[0-9]+$/, 'numbers').messages({
+    cpf: joi.string().required().length(11).pattern(/^[0-9]+$/, 'numbers').messages({
         'any.required': 'o campo cpf é obrigatório',
         'string.base': 'o campo cpf precisa ser do tipo string',
         'string.length': 'o campo cpf deve possuir 11 números',
         'string.pattern.name': 'o campo cpf deve ser uma string de valores numéricos'
     }),
-    cep: joi.string().min(8).max(11).messages({
+    cep: joi.string().min(8).max(11).trim().messages({
         'string.empty': 'o campo cep não pode estar vazio',
         'string.base': 'o campo cep precisa ser do tipo string',
         'string.max': 'o campo cep deve não pode conter menos que 8 ou mais que 11 valores',

@@ -42,6 +42,35 @@ const detalharProdutoId = async (req, res) => {
 };
 
 
+const listarProduto = async (req, res) => {
+
+    const { categoria_id } = req.query;
+
+    try {
+        if (Number(categoria_id)) {
+            const categoria = await knex('categorias').where('id', categoria_id).first();
+
+            if (categoria) {
+                const produtos = await knex('produtos').where('categoria_id', categoria_id).orderBy('id');
+                if (produtos == 0) {
+                    return res.status(404).json({ mensagem: 'Nenhum produto foi cadastrado nessa categoria.' });
+                }
+                return res.status(200).json(produtos);
+            } else {
+                return res.status(404).json({ mensagem: 'Categoria não cadastrada.' });
+            }
+        } else if (categoria_id && !Number(categoria_id)) {
+            return res.status(400).json({ mensagem: 'categoria com formato inváido' })
+        } else {
+            const produtos = await knex('produtos').orderBy('id');
+            return res.status(200).json(produtos);
+        }
+    } catch (error) {
+        return res.status(500).json({ mensagem: error.message });
+    }
+}
+
+
 const editarProduto = async (req, res) => {
 
     const { id } = req.params;
@@ -82,8 +111,8 @@ const excluirProdutoPorId = async (req, res) => {
 
     try {
         const produtoBusca = await knex('produtos').where({ id }).first()
-        if (!produtoBusca) {
 
+        if (!produtoBusca) {
 
             return res.status(404).json({ mensagem: 'ID de produto inexistente.' })
         }
@@ -99,9 +128,12 @@ const excluirProdutoPorId = async (req, res) => {
 
 }
 
+
+
 module.exports = {
     cadastrarProduto,
     detalharProdutoId,
+    listarProduto,
     editarProduto,
     excluirProdutoPorId
 }

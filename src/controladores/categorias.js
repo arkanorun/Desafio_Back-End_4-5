@@ -4,7 +4,7 @@ const knex = require('../conexao')
 const listarCategorias = async (req, res) => {
 
     try {
-        const categoriasLista = await knex('categorias')
+        const categoriasLista = await knex('categorias').orderBy('id')
 
         return res.json(categoriasLista)
 
