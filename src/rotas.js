@@ -2,12 +2,13 @@ const { Router } = require('express')
 const { cadastrarUsuario, perfilUsuario, editarUsuario } = require('./controladores/usuarios')
 const rotas = Router()
 const validarCorpo = require('./intermediarios/validarCorpoRequisicao.js')
-const { loginSchema, usuarioSchema, produtoSchema, clienteSchema } = require('./validacoes/schema')
+const { loginSchema, usuarioSchema, produtoSchema, clienteSchema, pedidoSchema } = require('./validacoes/schema')
 const { listarCategorias } = require('./controladores/categorias')
 const { cadastrarCliente, listarCliente, editarCliente, detalharCliente } = require('./controladores/clientes')
 const login = require('./controladores/autenticacao')
 const filtroLogin = require('./intermediarios/filtrarLogin')
 const { cadastrarProduto, detalharProdutoId, listarProduto, editarProduto, excluirProdutoPorId } = require('./controladores/produtos')
+const { cadastrarPedidos } = require('./controladores/pedidos')
 
 
 rotas.post('/usuario', validarCorpo(usuarioSchema), cadastrarUsuario)
@@ -40,5 +41,6 @@ rotas.get('/produto/:id', detalharProdutoId)
 
 rotas.delete('/produto/:id', excluirProdutoPorId)
 
+rotas.post('/pedido', validarCorpo(pedidoSchema), cadastrarPedidos)
 
 module.exports = rotas

@@ -51,10 +51,11 @@ const produtoSchema = joi.object({
         'number.positive': 'o campo valor precisa ser um número positivo',
         'number.integer': 'o campo valor precisa ser um número inteiro'
     }),
-    categoria_id: joi.number().integer().required().messages({
+    categoria_id: joi.number().integer().positive().required().messages({
         'any.required': 'o campo categoria_id é obrigatório',
         'number.base': 'o campo categoria_id precisa ser formado apenas por numeros',
-        'number.integer': 'o campo categoria_id precisa ser um número inteiro'
+        'number.integer': 'o campo categoria_id precisa ser um número inteiro',
+        'number.positive': 'o campo categoria_id precisa ser um numero positivo'
     })
 })
 
@@ -103,4 +104,39 @@ const clienteSchema = joi.object({
     })
 })
 
-module.exports = { usuarioSchema, loginSchema, produtoSchema, clienteSchema }
+const pedidoSchema = joi.object({
+    cliente_id: joi.number().positive().integer().required().messages({
+        'any.required': 'o campo cliente_id é obrigatório',
+        'number.base': 'o campo cliente_id precisa ser formado apenas por numeros',
+        'number.positive': 'o campo cliente_id precisa ser um número positivo',
+        'number.integer': 'o campo cliente_id precisa ser um número inteiro'
+    }),
+    'observacao': joi.string().trim().messages({
+        'string.empty': 'o campo observacao não pode estar vazio',
+        'string.base': 'o campo observacao precisa ser do tipo string'
+    }),
+    pedido_produtos: joi.array().required().min(1).items(
+        joi.object({
+            produto_id: joi.number().positive().integer().required().messages({
+                'any.required': "o campo produto_id é um campo obrigatório do array pedido_produtos",
+                'number.base': 'o campo produto_id precisa ser formado apenas por numeros',
+                'number.positive': 'o campo produto_id precisa ser um número positivo',
+                'number.integer': 'o campo produto_id precisa ser um número inteiro'
+            }),
+            quantidade_produto: joi.number().required().integer().min(1).messages({
+                'any.required': "o campo quantidade_produto é um campo obrigatório do array pedido_produtos",
+                'number.base': 'o campo quantidade_produto precisa ser formado apenas por numeros',
+                'number.min': 'o campo quantidade_produto precisa ser maior que 0',
+                'number.integer': 'o campo quantidade_produto precisa ser um número inteiro',
+            })
+        })
+    ).messages({
+        'any.required': 'o campo pedido_produtos é obrigatório',
+        'array.base': 'o campo pedido_produtos é um array de objetos',
+        'array.min': "o campo pedido_produtos deve conter os campos produto_id e quantidade_produto "
+    })
+})
+
+
+
+module.exports = { usuarioSchema, loginSchema, produtoSchema, clienteSchema, pedidoSchema }
