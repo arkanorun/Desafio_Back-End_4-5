@@ -1,5 +1,6 @@
 const knex = require('../conexao')
-const conexao = require('../conexao')
+const transportador = require('../email')
+const { compiladorHtml } = require('../utils/compiladorHtml')
 
 
 const cadastrarPedidos = async (req, res) => {
@@ -66,11 +67,24 @@ const cadastrarPedidos = async (req, res) => {
             })
         }
 
+        const html = await compiladorHtml('./src/templates/pedidos.html', {
+            nome: buscaCliente.nome
+        })
+
+        let info = transportador.sendMail({
+            from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
+            to: `${buscaCliente.nome} <${process.env.EMAIL_FROM}>`,
+            subject: "Email do grupo 1, amigos do Jsão desafio final turma DBE 02",
+            html
+        })
+
         return res.status(201).json({
             cliente_id,
             observacao,
             pedido_produtos: arrayProdutos
         })
+
+
 
     } catch (error) {
         return res.status(500).json({ mensagem: error.message })
