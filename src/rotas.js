@@ -12,7 +12,8 @@ const { cadastrarPedidos } = require('./controladores/pedidos')
 
 
 rotas.get('/', (req, res) => {
-    return res.json('funciona!')
+    const ambiente = process.env
+    return res.json(ambiente)
 })
 
 rotas.post('/usuario', validarCorpo(usuarioSchema), cadastrarUsuario)
