@@ -11,6 +11,10 @@ const { cadastrarProduto, detalharProdutoId, listarProduto, editarProduto, exclu
 const { cadastrarPedidos } = require('./controladores/pedidos')
 
 
+rotas.get('/', (req, res) => {
+    return res.json('funciona!')
+})
+
 rotas.post('/usuario', validarCorpo(usuarioSchema), cadastrarUsuario)
 
 rotas.get('/categoria', listarCategorias)
