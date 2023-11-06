@@ -6,7 +6,6 @@ require('dotenv').config()
 
 const cadastrarProduto = async (req, res) => {
     const { descricao, quantidade_estoque, valor, categoria_id } = req.body;
-    const { originalname, mimetype, buffer } = req.file;
 
     try {
         const categoriaBusca = await knex('categorias').where('id', '=', categoria_id).first();
@@ -15,18 +14,34 @@ const cadastrarProduto = async (req, res) => {
             return res.status(404).json({ mensagem: 'A categoria de produto informada não foi encontrada.' });
         }
 
-        const imagem = await uploadImagem(`${originalname}`, buffer, mimetype)
+        if (req.file) {
+            const { originalname, mimetype, buffer } = req.file;
+
+            const imagem = await uploadImagem(`${originalname}`, buffer, mimetype)
+
+            const produtoCriado = await knex('produtos').insert({
+                descricao,
+                quantidade_estoque,
+                valor,
+                categoria_id,
+                produto_imagem: imagem.url
+
+            }).returning('*');
+
+            return res.status(200).json({ mensagem: 'Produto criado com sucesso.', produto: produtoCriado[0] });
+        }
+
         const produtoCriado = await knex('produtos').insert({
             descricao,
             quantidade_estoque,
             valor,
             categoria_id,
-            produto_imagem: imagem.url
-
         }).returning('*');
 
         return res.status(200).json({ mensagem: 'Produto criado com sucesso.', produto: produtoCriado[0] });
+
     } catch (error) {
+        console.log(error)
         return res.status(500).json({ mensagem: error.message });
     }
 };
@@ -81,7 +96,7 @@ const editarProduto = async (req, res) => {
 
     const { id } = req.params;
     const { descricao, quantidade_estoque, valor, categoria_id } = req.body;
-    const { originalname, mimetype, buffer } = req.file;
+
 
     try {
         const produtoBusca = await knex('produtos').where({ id }).first()
@@ -98,14 +113,27 @@ const editarProduto = async (req, res) => {
 
         }
 
-        const imagem = await uploadImagem(`${originalname}`, buffer, mimetype)
+        if (req.file) {
+            const { originalname, mimetype, buffer } = req.file;
+
+            const imagem = await uploadImagem(`${originalname}`, buffer, mimetype)
+
+            const produtoEditado = await knex('produtos').where({ id }).update({
+                descricao,
+                quantidade_estoque,
+                valor,
+                categoria_id,
+                produto_imagem: imagem.url
+            });
+
+            return res.status(200).json({ mensagem: 'Produto atualizado com sucesso.' });
+        }
 
         const produtoEditado = await knex('produtos').where({ id }).update({
             descricao,
             quantidade_estoque,
             valor,
             categoria_id,
-            produto_imagem: imagem.url
         });
 
         return res.status(200).json({ mensagem: 'Produto atualizado com sucesso.' });

@@ -32,9 +32,9 @@ rotas.get('/cliente', listarCliente)
 
 rotas.get('/cliente/:id', detalharCliente)
 
-rotas.post('/produto', multer.single('imagem'), cadastrarProduto) //validarCorpo(produtoSchema),
+rotas.post('/produto', multer.single('imagem'), validarCorpo(produtoSchema), cadastrarProduto)
 
-rotas.put('/produto/:id', multer.single('imagem'), editarProduto) //validarCorpo(produtoSchema),
+rotas.put('/produto/:id', multer.single('imagem'), validarCorpo(produtoSchema), editarProduto)
 
 rotas.get('/produto', listarProduto);
 
