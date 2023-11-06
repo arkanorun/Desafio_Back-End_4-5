@@ -5,9 +5,9 @@ require('dotenv').config()
 
 
 const cadastrarProduto = async (req, res) => {
-    const { descricao, quantidade_estoque, valor, categoria_id  } = req.body;
-    const {originalname, mimetype, buffer} = req.file;
-    console.log(req.file)
+    const { descricao, quantidade_estoque, valor, categoria_id } = req.body;
+    const { originalname, mimetype, buffer } = req.file;
+
     try {
         const categoriaBusca = await knex('categorias').where('id', '=', categoria_id).first();
 
@@ -15,14 +15,14 @@ const cadastrarProduto = async (req, res) => {
             return res.status(404).json({ mensagem: 'A categoria de produto informada não foi encontrada.' });
         }
 
-        const imagem = await uploadImagem(`${originalname}`, buffer, mimetype)    
+        const imagem = await uploadImagem(`${originalname}`, buffer, mimetype)
         const produtoCriado = await knex('produtos').insert({
             descricao,
             quantidade_estoque,
             valor,
             categoria_id,
             produto_imagem: imagem.url
-            
+
         }).returning('*');
 
         return res.status(200).json({ mensagem: 'Produto criado com sucesso.', produto: produtoCriado[0] });
@@ -81,7 +81,7 @@ const editarProduto = async (req, res) => {
 
     const { id } = req.params;
     const { descricao, quantidade_estoque, valor, categoria_id } = req.body;
-    const {originalname, mimetype, buffer} = req.file;
+    const { originalname, mimetype, buffer } = req.file;
 
     try {
         const produtoBusca = await knex('produtos').where({ id }).first()
@@ -98,7 +98,7 @@ const editarProduto = async (req, res) => {
 
         }
 
-        const imagem = await uploadImagem(`${originalname}`, buffer, mimetype)  
+        const imagem = await uploadImagem(`${originalname}`, buffer, mimetype)
 
         const produtoEditado = await knex('produtos').where({ id }).update({
             descricao,
@@ -127,9 +127,9 @@ const excluirProdutoPorId = async (req, res) => {
             return res.status(404).json({ mensagem: 'ID de produto inexistente.' })
         }
 
-        const buscaProdutoPedido = await knex('pedido_produtos').where('produto_id','=', id).first()
+        const buscaProdutoPedido = await knex('pedido_produtos').where('produto_id', '=', id).first()
         if (buscaProdutoPedido) {
-            return res.status(400).json({mensagem: 'Não é possível remover um produto que está incluso em algum pedido.'})
+            return res.status(400).json({ mensagem: 'Não é possível remover um produto que está incluso em algum pedido.' })
         }
 
         await knex('produtos').where({ id }).del();
