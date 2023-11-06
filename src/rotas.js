@@ -9,8 +9,8 @@ const login = require('./controladores/autenticacao')
 const filtroLogin = require('./intermediarios/filtrarLogin')
 const { cadastrarProduto, detalharProdutoId, listarProduto, editarProduto, excluirProdutoPorId } = require('./controladores/produtos')
 const { cadastrarPedidos } = require('./controladores/pedidos')
-const multer = require ('./multer.js')
-const s3 = require ('./aws.js')
+const multer = require('./multer.js')
+const s3 = require('./aws.js')
 
 rotas.post('/usuario', validarCorpo(usuarioSchema), cadastrarUsuario)
 
@@ -18,20 +18,6 @@ rotas.get('/categoria', listarCategorias)
 
 rotas.post('/login', validarCorpo(loginSchema), login)
 
-
-rotas.get('/arquivos', async (req,res) => {
-    try {
-        const arquivos = await s3.listObjects({
-            Bucket: process.env.BUCKET
-        }).promise()
-    
-        return res.json(arquivos)
-    } catch (error) {
-        return res.status(500).json({mensagem:"erro do servidor"})
-    }
-    
-    
-})
 rotas.use(filtroLogin)
 
 rotas.get('/usuario', perfilUsuario)
@@ -46,7 +32,7 @@ rotas.get('/cliente', listarCliente)
 
 rotas.get('/cliente/:id', detalharCliente)
 
-rotas.post('/produto',  multer.single('imagem'), cadastrarProduto) //validarCorpo(produtoSchema),
+rotas.post('/produto', multer.single('imagem'), cadastrarProduto) //validarCorpo(produtoSchema),
 
 rotas.put('/produto/:id', multer.single('imagem'), editarProduto) //validarCorpo(produtoSchema),
 
