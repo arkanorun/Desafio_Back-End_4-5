@@ -1,4 +1,5 @@
-const { uploadImagem } = require('../aws');
+const { S3 } = require('aws-sdk');
+const { uploadImagem, deletarImagem } = require('../aws');
 const knex = require('../conexao')
 require('dotenv').config()
 
@@ -35,7 +36,7 @@ const cadastrarProduto = async (req, res) => {
             descricao,
             quantidade_estoque,
             valor,
-            categoria_id,
+            categoria_id
         }).returning('*');
 
         return res.status(200).json({ mensagem: 'Produto criado com sucesso.', produto: produtoCriado[0] });
@@ -116,6 +117,10 @@ const editarProduto = async (req, res) => {
         if (req.file) {
             const { originalname, mimetype, buffer } = req.file;
 
+            if (produtoBusca.produto_imagem) {
+                await deletarImagem(produtoBusca.produto_imagem)
+            }
+
             const imagem = await uploadImagem(`${originalname}`, buffer, mimetype)
 
             const produtoEditado = await knex('produtos').where({ id }).update({
@@ -158,6 +163,10 @@ const excluirProdutoPorId = async (req, res) => {
         const buscaProdutoPedido = await knex('pedido_produtos').where('produto_id', '=', id).first()
         if (buscaProdutoPedido) {
             return res.status(400).json({ mensagem: 'Não é possível remover um produto que está incluso em algum pedido.' })
+        }
+
+        if (produtoBusca.produto_imagem) {
+            await deletarImagem(produtoBusca.produto_imagem)
         }
 
         await knex('produtos').where({ id }).del();
