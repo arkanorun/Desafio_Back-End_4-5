@@ -8,9 +8,9 @@ const { cadastrarCliente, listarCliente, editarCliente, detalharCliente } = requ
 const login = require('./controladores/autenticacao')
 const filtroLogin = require('./intermediarios/filtrarLogin')
 const { cadastrarProduto, detalharProdutoId, listarProduto, editarProduto, excluirProdutoPorId } = require('./controladores/produtos')
-const { cadastrarPedidos } = require('./controladores/pedidos')
+const { cadastrarPedidos, listarPedidos } = require('./controladores/pedidos')
 const multer = require('./multer.js')
-const s3 = require('./aws.js')
+
 
 rotas.post('/usuario', validarCorpo(usuarioSchema), cadastrarUsuario)
 
@@ -43,5 +43,7 @@ rotas.get('/produto/:id', detalharProdutoId)
 rotas.delete('/produto/:id', excluirProdutoPorId)
 
 rotas.post('/pedido', validarCorpo(pedidoSchema), cadastrarPedidos)
+
+rotas.get('/pedido', listarPedidos)
 
 module.exports = rotas
