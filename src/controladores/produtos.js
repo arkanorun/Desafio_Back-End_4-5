@@ -29,7 +29,7 @@ const cadastrarProduto = async (req, res) => {
 
             }).returning('*');
 
-            return res.status(200).json({ mensagem: 'Produto criado com sucesso.', produto: produtoCriado[0] });
+            return res.status(201).json({ mensagem: 'Produto criado com sucesso.', produto: produtoCriado[0] });
         }
 
         const produtoCriado = await knex('produtos').insert({
@@ -39,7 +39,7 @@ const cadastrarProduto = async (req, res) => {
             categoria_id
         }).returning('*');
 
-        return res.status(200).json({ mensagem: 'Produto criado com sucesso.', produto: produtoCriado[0] });
+        return res.status(201).json({ mensagem: 'Produto criado com sucesso.', produto: produtoCriado[0] });
 
     } catch (error) {
         console.log(error)
@@ -131,7 +131,7 @@ const editarProduto = async (req, res) => {
                 produto_imagem: imagem.url
             });
 
-            return res.status(200).json({ mensagem: 'Produto atualizado com sucesso.' });
+            return res.status(201).json({ mensagem: 'Produto atualizado com sucesso.' });
         }
 
         const produtoEditado = await knex('produtos').where({ id }).update({
@@ -141,7 +141,7 @@ const editarProduto = async (req, res) => {
             categoria_id,
         });
 
-        return res.status(200).json({ mensagem: 'Produto atualizado com sucesso.' });
+        return res.status(201).json({ mensagem: 'Produto atualizado com sucesso.' });
 
     } catch (error) {
         return res.status(500).json({ mensagem: error.message })
