@@ -10,7 +10,7 @@ const filtroLogin = require('./intermediarios/filtrarLogin')
 const { cadastrarProduto, detalharProdutoId, listarProduto, editarProduto, excluirProdutoPorId } = require('./controladores/produtos')
 const { cadastrarPedidos, listarPedidos } = require('./controladores/pedidos')
 const multer = require('./multer.js')
-const s3 = require('./aws.js')
+
 
 rotas.post('/usuario', validarCorpo(usuarioSchema), cadastrarUsuario)
 

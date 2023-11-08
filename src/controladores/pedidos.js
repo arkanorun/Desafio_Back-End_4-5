@@ -95,40 +95,46 @@ const cadastrarPedidos = async (req, res) => {
 const listarPedidos = async (req, res) => {
     const { cliente_id } = req.query
 
-    const pedidosProdutos = []
+    const pedidoProdutos = []
 
     try {
+
         if (cliente_id) {
 
-            const pedidos = await knex('pedidos').where({ cliente_id }).select('id', 'valor_total', 'observacao', 'cliente_id')
+            const pedidos = await knex('pedidos')
+                .select('id', 'valor_total', 'observacao', 'cliente_id')
                 .where('cliente_id', cliente_id)
 
-
-            if (pedidos.length == 0) {
+            if (pedidos.length === 0) {
                 return res.status(404).json({ message: 'Nenhum pedido foi cadastrado para o cliente informado.' });
             }
 
             for (let pedido of pedidos) {
-                const pedido_produtos = await knex('pedido_produtos').select("id", 'quantidade_produto', 'valor_produto', 'pedido_id', 'produto_id')
+
+                const pedidosCliente = await knex('pedido_produtos')
+                    .select("id", 'quantidade_produto', 'valor_produto', 'pedido_id', 'produto_id')
                     .where('pedido_id', pedido.id)
 
-                pedidosProdutos.push({
+                pedidoProdutos.push({
                     pedido,
-                    pedido_produtos,
-                });
+                    pedido_produtos: pedidosCliente
+                })
             }
 
-            res.json(pedidosProdutos);
+            return res.json(pedidoProdutos);
+
         } else {
 
             const pedidos = await knex('pedidos').orderBy('id');
             return res.json({ pedidos });
-
         }
+
+
     } catch (error) {
         return res.status(500).json({ mensagem: error.message })
     }
 };
+
 
 
 module.exports = { cadastrarPedidos, listarPedidos }

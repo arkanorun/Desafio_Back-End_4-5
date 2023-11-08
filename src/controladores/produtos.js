@@ -180,8 +180,6 @@ const excluirProdutoPorId = async (req, res) => {
 
 }
 
-
-
 module.exports = {
     cadastrarProduto,
     detalharProdutoId,
