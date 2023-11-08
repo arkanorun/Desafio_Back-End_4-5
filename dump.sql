@@ -68,4 +68,4 @@ create table pedido_produtos (
   valor_produto integer not null
 )
 
-alter table produtos add column produtos_imagem text
+alter table produtos add column produto_imagem text
